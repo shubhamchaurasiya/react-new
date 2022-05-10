@@ -8,9 +8,22 @@ import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+
+
+const useStyles = makeStyles({
+    card: {
+      maxWidth: 345,
+      boxShadow: "0 5px 8px 0 rgba(0, 0, 0, 0.3)",
+      backgroundColor: "#fafafa",
+    },
+    media: {
+      height: 300,
+    },
+  });
 
 const Header = () => {
-    const baseurl = "https://jsonplaceholder.typicode.com/posts?_limit=10";
+    const baseurl = "https://finalspaceapi.com/api/v0/character/?limit=12";
     const [post, setPost] = React.useState([]);
 
     React.useEffect( () => {
@@ -18,8 +31,8 @@ const Header = () => {
               setPost(response.data);
           });
         },[]);
+        const classes = useStyles();
   return (
-
     <div>
       <Container>
         <Typography
@@ -33,24 +46,20 @@ const Header = () => {
         <Grid container spacing={3}>
           {post.map((post) => (
             <Grid item xs={12} sm={4} key={post.id}>
-            
-            
-              <Card className="">
-              <CardMedia
-                  className={post.title}
-                  image={post.id}
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.media}
+                  image={post.img_url}
                 />
                 <CardContent>
                   <Typography color="primary" variant="h5">
-                    {post.id}.{post.title}
+                    {post.id}.{post.name}
                   </Typography>
 
                   <Typography color="textSecondary" variant="subtitle2">
-                    {post.body}
+                    {post.status}
                   </Typography>
-                  <Button variant="contained" color="primary">
-                        Hello World
-                    </Button>
+           
                 </CardContent>
               </Card>
             </Grid>
